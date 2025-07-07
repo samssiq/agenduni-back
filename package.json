@@ -20,5 +20,6 @@
   "homepage": "https://github.com/samssiq/agenduni-back#readme",
   "dependencies": {
     "express": "^5.1.0"
-  }
+  },
+  "devDependencies": {}
 }
