@@ -7,6 +7,10 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
   },
+  "scripts": {
+    "dev": "ts-node src/index.ts"
+  },
+
   "repository": {
     "type": "git",
     "url": "git+https://github.com/samssiq/agenduni-back.git"
@@ -19,7 +23,17 @@
   },
   "homepage": "https://github.com/samssiq/agenduni-back#readme",
   "dependencies": {
-    "express": "^5.1.0"
+    "dotenv": "^17.2.0",
+    "express": "^5.1.0",
+    "mysql2": "^3.14.2",
+    "pg": "^8.16.3",
+    "sequelize": "^6.37.7"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "@types/dotenv": "^6.1.1",
+    "@types/express": "^5.0.3",
+    "@types/node": "^24.0.13",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  }
 }
