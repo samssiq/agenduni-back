@@ -7,24 +7,24 @@ import {User} from './user';
 interface DisciplinaCreationAttributes extends Model <DisciplinaAttributes>{}
 
 interface DisciplinaAttributes {
-  name: string;
-  classroom: string;
+  nome: string;
+  sala: string;
   professor: string;
-  schedule: string;
-  exams: string;
-  absence: number;
-  grades: number;
+  horario: string;
+  avaliacoes: string;
+  faltas: number;
+  notas: number;
 }
 
 
 export class Disciplina extends Model<DisciplinaAttributes, DisciplinaCreationAttributes> implements DisciplinaAttributes {
-  name!: string;
-  classroom!: string;
+  nome!: string;
+  sala!: string;
   professor!: string;
-  schedule!: string;
-  exams!: string;
-  absence!: number;
-  grades!: number;
+  horario!: string;
+  avaliacoes!: string;
+  faltas!: number;
+  notas!: number;
 }
 
 
@@ -37,11 +37,11 @@ Disciplina.init(
       primaryKey: true,
       #Deixa como chave primária? O usuário precisa atribuir um id à disciplina?
     }**/
-    name: {
+    nome: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    classroom: {
+    sala: {
       type: DataTypes.STRING,
       allowNull: false,
       //unique: true, #quando usar o unique?
@@ -50,19 +50,19 @@ Disciplina.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    schedule: {
+    horario: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-    exams: {
+    avaliacoes: {
         type: DataTypes.STRING,
         allowNull: true,
     },
-    absence: {
+    faltas: {
         type: DataTypes.INTEGER,
         allowNull: true,
     },
-    grades: {
+    notas: {
         type: DataTypes.INTEGER,
         allowNull: true,
     },

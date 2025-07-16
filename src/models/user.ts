@@ -8,17 +8,17 @@ interface UserCreationAttributes extends Optional<UserAttributes, 'id'>{}
 
 interface UserAttributes {
   id: number;
-  name: string;
+  nome: string;
   email: string;
-  password: string;
+  senha: string;
 }
 
 
 export class User extends Model<UserAttributes, UserCreationAttributes> implements UserAttributes {
   public id!: number;
-  public name!: string;
+  public nome!: string;
   public email!: string;
-  public password!: string;
+  public senha!: string;
 }
 
 
@@ -30,7 +30,7 @@ User.init(
       autoIncrement: true,
       primaryKey: true,
     },
-    name: {
+    nome: {
       type: DataTypes.STRING,
       allowNull: false,
     },
@@ -39,7 +39,7 @@ User.init(
       allowNull: false,
       unique: true,
     },
-    password: {
+    senha: {
       type: DataTypes.STRING,
       allowNull: false,
     },
