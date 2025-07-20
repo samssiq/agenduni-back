@@ -2,19 +2,42 @@ import { User } from "../models/user";
 
 
 export class UserRepository {
-    // Criar um novo usuário
-  async createUser(name: string, email: string, password: string) {
-    // Use o método `create` para salvar no banco de dados
-    return await User.create({
-      name,
-      email,
-      password
-    });
-  }
+  async createUser(data: {
+    nome: string, 
+    email: string, 
+    senha: string}) {
 
+    return await User.create(data);
+  }
 
   async getAllUsers() {
     return await User.findAll();
   }
+
+  async updateUser(id: number, data:  {
+    nome?: string, 
+    email?: string, 
+    senha?: string}) {
+
+    const [rowsUpdated] = await User.update(data, {
+      where: {id}
+    });
+
+    if (rowsUpdated === 0) return null;
+
+    return await User.findByPk(id);
 }
+  async findById(id: number){
+    return await User.findByPk(id);
+  }
+
+  async deleteUser(id: number){
+    const user = await User.findByPk(id)
+    if (!user) return null;
+    await user.destroy();
+    return user;
+  }
+  } 
+
+
 

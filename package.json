@@ -4,13 +4,8 @@
   "description": "Este é o repositório do backend do Agenduni. A minha ideia é unir em um só lugar tudo o que um estudante universitário precisa para manter seu semestre organizado: disciplinas, notas, faltas, lembretes, datas importantes, contatos dos professores e materiais de estudos (resumos, fotos, pdfs e afins).",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
-  },
-  "scripts": {
     "dev": "ts-node src/index.ts"
   },
-
   "repository": {
     "type": "git",
     "url": "git+https://github.com/samssiq/agenduni-back.git"
@@ -23,6 +18,7 @@
   },
   "homepage": "https://github.com/samssiq/agenduni-back#readme",
   "dependencies": {
+    "@sequelize/postgres": "^7.0.0-alpha.46",
     "dotenv": "^17.2.0",
     "express": "^5.1.0",
     "mysql2": "^3.14.2",
