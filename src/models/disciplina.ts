@@ -67,7 +67,7 @@ Disciplina.init(
         allowNull: true,
     },
     notas: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.NUMBER,
         allowNull: true,
     },
     userId: {
