@@ -4,7 +4,7 @@ import { LembretesRepository } from "../repository/lembretesRepository";
 export class lembretesService {
     private repo = new LembretesRepository();
 
-    async createlembretes(data: Lembrete) {
+    async createLembretes(data: Lembrete) {
         return await this.repo.createLembretes(data);
     }
 
