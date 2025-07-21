@@ -67,7 +67,7 @@ export class DisciplinaRepository {
     })
     if (!discplina) return null}
 
-    async deleteDiscplina(id: number, userId: number){
+    async deleteDisciplina(id: number, userId: number){
     const disciplina = await Disciplina.findOne({
         where: {
             userId,

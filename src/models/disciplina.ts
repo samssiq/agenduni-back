@@ -1,12 +1,14 @@
 import { Model, DataTypes, Optional } from 'sequelize';
 import sequelize from '../config/database';
 import {User} from './user';
+import { Materiais } from './materiais';
 
 // Defina os atributos do modelo
 
-interface DisciplinaCreationAttributes extends Model <DisciplinaAttributes>{}
+type DisciplinaCreationAttributes = Optional<DisciplinaAttributes, 'id'>;
 
 interface DisciplinaAttributes {
+  id: number;
   nome: string;
   sala: string;
   professor: string;
@@ -14,10 +16,12 @@ interface DisciplinaAttributes {
   avaliacoes: string;
   faltas: number;
   notas: number;
+  userId: number;
 }
 
 
 export class Disciplina extends Model<DisciplinaAttributes, DisciplinaCreationAttributes> implements DisciplinaAttributes {
+  id!: number;
   nome!: string;
   sala!: string;
   professor!: string;
@@ -25,18 +29,18 @@ export class Disciplina extends Model<DisciplinaAttributes, DisciplinaCreationAt
   avaliacoes!: string;
   faltas!: number;
   notas!: number;
+  userId!: number;
 }
 
 
 // Inicialize o modelo com os campos no banco
 Disciplina.init(
   {
-    /**id: {
+    id: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true,
-      #Deixa como chave primária? O usuário precisa atribuir um id à disciplina?
-    }**/
+    },
     nome: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -66,6 +70,10 @@ Disciplina.init(
         type: DataTypes.INTEGER,
         allowNull: true,
     },
+    userId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    }
     
   },
   {
@@ -76,3 +84,5 @@ Disciplina.init(
 );
 
 User.hasMany(Disciplina);
+
+Disciplina.hasMany(Materiais, { foreignKey: 'discId' });

@@ -1,44 +1,53 @@
-import { Model, DataTypes, Optional } from 'sequelize';
+import { Model, DataTypes, Optional, IntegerDataType } from 'sequelize';
+import { Blob } from 'buffer';
 import sequelize from '../config/database';
 import {Disciplina} from './disciplina';
 
 // Defina os atributos do modelo
-
-interface MateriaisCreationAttributes extends Model <MateriaisAttributes>{}
+type MateriaisCreationAttributes = Optional<MateriaisAttributes, 'id'>;
 
 interface MateriaisAttributes {
+   id: number
    resumos: string;
    links: string;
-   //arquivos (imagens, pdfs, docs): ??? como referenciá-los?
+   arquivos: Blob;
+   discId: number;
 }
 
 
 export class Materiais extends Model<MateriaisAttributes, MateriaisCreationAttributes> implements MateriaisAttributes {
+    id!: number;
     resumos!: string;
     links!: string;
-    //arquivos (imagens, pdfs, docs): ??? como referenciá-los?
+    arquivos!: Blob;
+    discId!: number;
 }
 
 
 // Inicialize o modelo com os campos no banco
 Materiais.init(
   {
-    /**id: {
+    id: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true,
-      #Deixa como chave primária? O usuário precisa atribuir um id a um material?
-    }**/
+    },
     resumos: {
       type: DataTypes.STRING,
       allowNull: true,
     },
     links: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
-    //arquivos (imagens, pdfs, docs): ??? como referenciá-los?
-    //quais os possiveis datatypes?
+    arquivos: {
+      type: DataTypes.BLOB,
+      allowNull: true,
+    },
+    discId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    }
   },
   {
     sequelize,
@@ -46,4 +55,5 @@ Materiais.init(
     timestamps: false,
   }
 );
- //Uma disciplina pode ter vários materiais, mas não várias abas de materiais.
+
+Materiais.belongsTo(Disciplina, {foreignKey: 'discId'});

@@ -45,7 +45,7 @@ async createContatos(data: {
         return await Contato.findByPk(id);
     }
 
-    async getOneLembrete(discId: number, id: number){
+    async getOneContato(discId: number, id: number){
         const contato = await Contato.findOne({
             where: {
                 discId,

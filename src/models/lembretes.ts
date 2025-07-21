@@ -1,28 +1,35 @@
-import { Model, DataTypes, Optional, } from 'sequelize';
+import { Model, DataTypes, Optional, DATE, } from 'sequelize';
 import sequelize from '../config/database';
 import { Disciplina } from './disciplina';
 
 
 // Defina os atributos do modelo
 
-interface LembreteCreationAttributes extends Optional <LembreteAttributes, 'data_fim'>{}
+type LembreteCreationAttributes = Optional<LembreteAttributes, 'id'>;
 
 interface LembreteAttributes {
-  //id: number;
+  id: number;
   data_inicio: number;
   data_fim: number;
+  discId: number;
 }
 
 
 export class Lembrete extends Model<LembreteAttributes, LembreteCreationAttributes> implements LembreteAttributes {
+    id!: number;
     data_inicio!: number;
     data_fim!: number;
+    discId!: number;
 }
 
 
 // Inicialize o modelo com os campos no banco
 Lembrete.init(
   {
+    id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
     data_inicio: {
       type: DataTypes.NUMBER,
       allowNull: false,
@@ -31,6 +38,10 @@ Lembrete.init(
         type: DataTypes.NUMBER,
         allowNull: false,
       },
+    discId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    }
   },
   {
     sequelize,
@@ -39,6 +50,4 @@ Lembrete.init(
   }
 );
 
-Lembrete.belongsTo(Disciplina);
-
-//avisos precisa ser uma classe? ou pode virar um método?
+Lembrete.belongsTo(Disciplina, {foreignKey: 'discId'});

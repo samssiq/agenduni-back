@@ -5,21 +5,24 @@ import { Disciplina } from './disciplina';
 
 // Defina os atributos do modelo
 
-interface ContatoCreationAttributes extends Optional<ContatoAttributes, 'id'>{}
+type ContatoCreationAttributes = Optional<ContatoAttributes, 'id'>;
 
 interface ContatoAttributes {
   id: number;
   nome: string;
   email: string;
   telefone: string;
+  discId: number;
 }
 
 
 export class Contato extends Model<ContatoAttributes, ContatoCreationAttributes> implements ContatoAttributes {
-  public id!: number;
-  public nome!: string;
-  public email!: string;
-  public telefone!: string;
+   id!: number;
+   nome!: string;
+   email!: string;
+   telefone!: string;
+   discId!: number;
+
 }
 
 
@@ -44,6 +47,10 @@ Contato.init(
       type: DataTypes.STRING,
       allowNull: true,
     },
+    discId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    }
   },
   {
     sequelize,
@@ -52,4 +59,4 @@ Contato.init(
   }
 );
 
-Disciplina.hasMany(Contato);
+Disciplina.hasMany(Contato, {foreignKey: 'discId'});
