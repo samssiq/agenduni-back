@@ -1,5 +1,6 @@
 import { Model, DataTypes, Optional } from 'sequelize';
 import sequelize from '../config/database';
+import { Disciplina } from './disciplina';
 
 
 // Defina os atributos do modelo
@@ -50,4 +51,6 @@ User.init(
     timestamps: false,
   }
 );
+
+User.hasMany(Disciplina);
 

@@ -59,4 +59,4 @@ Contato.init(
   }
 );
 
-Disciplina.hasMany(Contato, {foreignKey: 'discId'});
+Contato.belongsTo(Disciplina, {foreignKey: 'discId'})
