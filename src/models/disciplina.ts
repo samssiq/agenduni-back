@@ -1,8 +1,9 @@
 import { Model, DataTypes, Optional } from 'sequelize';
 import sequelize from '../config/database';
-import {User} from './user';
+import { User } from './user';
 import { Materiais } from './materiais';
 import { Contato } from './contatos'
+import { Lembrete } from './lembretes';
 
 // Defina os atributos do modelo
 
@@ -85,5 +86,7 @@ Disciplina.init(
 );
 
 
-Disciplina.hasMany(Materiais, { foreignKey: 'discId' });
-Disciplina.hasMany(Contato, {foreignKey: 'discId'});
+Disciplina.hasMany(Materiais, { foreignKey: 'id' });
+Disciplina.hasMany(Contato, {foreignKey: 'id'});
+Disciplina.hasMany(Lembrete, {foreignKey: 'id'});
+Disciplina.belongsTo(User, {foreignKey: 'id'});
