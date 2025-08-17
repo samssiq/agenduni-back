@@ -1,6 +1,6 @@
 import { Model, DataTypes, Optional } from 'sequelize';
 import sequelize from '../config/database';
-import { User } from './user';
+import { User } from './User';
 import { Materiais } from './materiais';
 import { Contato } from './contatos'
 import { Lembrete } from './lembretes';
@@ -69,7 +69,7 @@ Disciplina.init(
         allowNull: true,
     },
     notas: {
-        type: DataTypes.NUMBER,
+        type: DataTypes.FLOAT,
         allowNull: true,
     },
     userId: {
@@ -86,7 +86,7 @@ Disciplina.init(
 );
 
 
-Disciplina.hasMany(Materiais, { foreignKey: 'id' });
-Disciplina.hasMany(Contato, {foreignKey: 'id'});
-Disciplina.hasMany(Lembrete, {foreignKey: 'id'});
-Disciplina.belongsTo(User, {foreignKey: 'id'});
+//Disciplina.hasMany(Materiais, { foreignKey: 'discId' });
+//Disciplina.hasMany(Contato, {foreignKey: 'discId'});
+//Disciplina.hasMany(Lembrete, {foreignKey: 'discId'});
+//Disciplina.belongsTo(User, {foreignKey: 'userId'});

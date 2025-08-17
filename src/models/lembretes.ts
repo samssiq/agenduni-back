@@ -28,6 +28,8 @@ Lembrete.init(
   {
     id: {
       type: DataTypes.INTEGER,
+      autoIncrement: true,  
+      primaryKey: true,    
       allowNull: false,
     },
     data_inicio: {
@@ -50,4 +52,4 @@ Lembrete.init(
   }
 );
 
-Lembrete.belongsTo(Disciplina, {foreignKey: 'discId'});
+//Lembrete.belongsTo(Disciplina, {foreignKey: 'discId'});

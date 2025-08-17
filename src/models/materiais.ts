@@ -56,4 +56,4 @@ Materiais.init(
   }
 );
 
-Materiais.belongsTo(Disciplina, {foreignKey: 'discId'});
+// Materiais.belongsTo(Disciplina, {foreignKey: 'discId'});

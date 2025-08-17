@@ -59,4 +59,4 @@ Contato.init(
   }
 );
 
-Contato.belongsTo(Disciplina, {foreignKey: 'discId'})
+//Contato.belongsTo(Disciplina, {foreignKey: 'discId'})

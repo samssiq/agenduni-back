@@ -4,8 +4,8 @@ import { Disciplina } from "../models/disciplina";
 export class LembretesRepository {
 
     async createLembretes(data: { 
-       data_inicio: number;
-       data_fim: number;
+       data_inicio: Date;
+       data_fim: Date;
        discId: number;
     }) {
 
@@ -13,8 +13,8 @@ export class LembretesRepository {
         if (!disciplina) return null
 
         const materais = await Lembrete.create({
-            data_inicio: data.data_inicio,
-            data_fim: data.data_fim,
+            data_inicio: new Date(data.data_inicio),
+            data_fim: new Date(data.data_fim),
             discId: data.discId,
 
         });
@@ -31,11 +31,16 @@ export class LembretesRepository {
     }
 
     async updateLembrete(id: number, data: {
-       data_inicio: number;
-       data_fim: number;
+       data_inicio: Date;
+       data_fim: Date;
        discId: number;
     }) {
-        const [rowsUpdated] = await Lembrete.update(data, {
+        const updateData = {
+            data_inicio: new Date(data.data_inicio),
+            data_fim: new Date(data.data_fim),
+            discId: data.discId
+        };
+        const [rowsUpdated] = await Lembrete.update(updateData, {
             where: {id}
         });
         if (rowsUpdated === 0) return null;

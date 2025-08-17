@@ -52,5 +52,5 @@ User.init(
   }
 );
 
-User.hasMany(Disciplina);
+//User.hasMany(Disciplina);
 
