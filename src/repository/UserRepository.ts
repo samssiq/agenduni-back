@@ -1,7 +1,25 @@
 import { User } from "../models/User";
+import sequelize from "../config/database";
+
 
 export class UserRepository {
+  private UserModel: typeof User;
+  
 
+  constructor(){
+    this.UserModel = User;
+  }
+
+  // async createUser(UserData:any):Promise<User> {
+    
+  //   const existingUser = await this.UserModel.findOne({where:{email:UserData.email}});
+  //   console.log(existingUser);
+  //   if (existingUser){
+  //     throw new Error('Email já está em uso.');
+  //   }
+  //   // Use o método `create` para salvar no banco de dados
+  //   return await this.UserModel.create(UserData);
+  // }
   async createUser(data: {
     nome: string, 
     email: string, 
@@ -11,7 +29,7 @@ export class UserRepository {
   }
 
   async getAllUsers() {
-    return await User.findAll();
+    return await this.UserModel.findAll();
   }
 
   //jeito correto de fazer update para um único usuário
@@ -24,20 +42,20 @@ export class UserRepository {
       password: string;
     }>
   ) {
-    const user = await User.findByPk(id);
+    const user = await this.UserModel.findByPk(id);
     return user
       ? await user!.update(data)
       : null;
   }
 
   async findById(id: number){
-    return await User.findByPk(id);
+    return await this.UserModel.findByPk(id);
   }
 
   //apenas um return para melhor legibilidade
   async deleteUser(id: number) {
     let success = false;
-    const user = await User.findByPk(id);
+    const user = await this.UserModel.findByPk(id);
     if (user) {
       await user!.destroy();
       success = true;
