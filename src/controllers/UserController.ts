@@ -1,13 +1,17 @@
 import { Request, Response } from "express";
-import UserService from "../services/UserService";
+import { UserService } from "../services/UserService";
 
-class UserController {
+export class UserController {
 
-  //o retorno de cada método deve ser Promise<Response>
+  private userService: UserService;
+
+  constructor(userService: UserService) {
+    this.userService = userService;
+  }
   
   async createUser(req: Request, res: Response): Promise<Response> {
     try {
-      const user = await UserService.createUser(req.body);
+      const user = await this.userService.createUser(req.body);
       return res.status(201).json(user);
     } catch (error) {
       return res.status(500).json({ error: "Erro ao criar usuário" });
@@ -16,7 +20,7 @@ class UserController {
 
   async updateUser(req: Request, res: Response): Promise<Response> {
     try {
-      const user = await UserService.updateUser(parseInt(req.params.id), req.body);
+      const user = await this.userService.updateUser(parseInt(req.params.id), req.body);
       return !user
         ? res.status(404).json({ error: "Usuário não encontrado" })
         : res.status(200).json(user);
@@ -27,7 +31,7 @@ class UserController {
 
   async getAllUsers(req: Request, res: Response): Promise<Response> {
     try {
-      const users = await UserService.getAllUsers();
+      const users = await this.userService.getAllUsers();
       return res.status(200).json(users);
     } catch (error) {
       return res.status(500).json({ error: "Erro ao listar usuários" });
@@ -36,7 +40,7 @@ class UserController {
 
   async getUserById(req: Request, res: Response): Promise<Response> {
     try {
-      const user = await UserService.getUserById(parseInt(req.params.id));
+      const user = await this.userService.getUserById(parseInt(req.params.id));
       return !user 
         ? res.status(404).json({ error: "Usuário não encontrado" }) 
         : res.status(200).json(user);
@@ -47,7 +51,7 @@ class UserController {
 
   async deleteUser(req: Request, res: Response): Promise<Response> {
     try {
-      const success = await UserService.deleteUser(parseInt(req.params.id));
+      const success = await this.userService.deleteUser(parseInt(req.params.id));
       return !success
         ? res.status(404).json({ error: "Usuário não encontrado" })
         : res.status(204).send();
@@ -56,5 +60,3 @@ class UserController {
     }
   }
 }
-
-export default new UserController();

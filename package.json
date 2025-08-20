@@ -4,6 +4,7 @@
   "description": "Este é o repositório do backend do Agenduni. A minha ideia é unir em um só lugar tudo o que um estudante universitário precisa para manter seu semestre organizado: disciplinas, notas, faltas, lembretes, datas importantes, contatos dos professores e materiais de estudos (resumos, fotos, pdfs e afins).",
   "main": "index.js",
   "scripts": {
+    "test": "jest --coverage",
     "dev": "ts-node src/index.ts"
   },
   "repository": {
@@ -25,20 +26,30 @@
     "jsonwebtoken": "^9.0.2",
     "mysql2": "^3.14.2",
     "pg": "^8.16.3",
+    "save-dev": "^0.0.1-security",
     "sequelize": "^6.37.7",
     "swagger-jsdoc": "^6.2.8",
     "swagger-themes": "^1.4.3",
     "swagger-ui-express": "^5.0.1"
   },
   "devDependencies": {
+    "@jest/globals": "^30.0.5",
     "@types/bcryptjs": "^2.4.6",
     "@types/dotenv": "^6.1.1",
     "@types/express": "^5.0.3",
+    "@types/jest": "^30.0.0",
     "@types/jsonwebtoken": "^9.0.10",
-    "@types/node": "^24.0.13",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "^24.3.0",
     "@types/swagger-jsdoc": "^6.0.4",
     "@types/swagger-ui-express": "^4.1.8",
+    "@types/webpack-env": "^1.18.8",
+    "chai": "^5.3.1",
+    "jest": "^30.0.5",
+    "mocha": "^11.7.1",
+    "request": "^2.88.2",
+    "ts-jest": "^29.4.1",
     "ts-node": "^10.9.2",
-    "typescript": "^5.8.3"
+    "typescript": "^5.9.2"
   }
 }

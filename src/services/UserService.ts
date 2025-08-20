@@ -1,12 +1,22 @@
 import * as bcrypt from "bcryptjs";
 import { UserRepository } from "../repository/UserRepository";
+import { User } from "../models/User";
+import * as jwt from "jsonwebtoken";
 
 //foi adicionada criptografia de senha no create e update
 
 const userRepository = new UserRepository();
 const saltRounds = 10;
 
-class UserService {
+export class UserService {
+
+  private userRepository = new UserRepository();
+  private jwtSecret: jwt.Secret;
+
+    constructor(userRepository: UserRepository) {
+        this.userRepository = userRepository;
+        this.jwtSecret = (process.env.JWT_SECRET || "defaultSecret") as jwt.Secret;
+    }
 
   async createUser(data: {
     nome: string,
@@ -43,4 +53,3 @@ class UserService {
   }
 }
 
-export default new UserService();

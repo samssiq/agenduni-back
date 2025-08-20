@@ -13,7 +13,7 @@ import { DisciplinaController } from "./controllers/disciplinaController";
 import { ContatoController } from "./controllers/contatoController";
 import { LembretesController } from "./controllers/lembretesController";
 import { MateriaisController } from "./controllers/materiaisController";
-import UserController from "./controllers/UserController"; 
+import {UserController} from "./controllers/UserController"; 
 
 dotenv.config();
 
