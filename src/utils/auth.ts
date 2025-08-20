@@ -1,10 +1,10 @@
-import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
-import dotenv from 'dotenv';
+import * as bcrypt from 'bcryptjs';
+import * as jwt from 'jsonwebtoken';
+import * as dotenv from 'dotenv';
 
 dotenv.config();
 
-const JWT_SECRET = process.env.JWT_SECRET || 'your_jwt_secret_key';
+const JWT_SECRET = process.env.JWT_SECRET || 'sua_senha_secreta';
 
 // Função para criptografar a senha
 
