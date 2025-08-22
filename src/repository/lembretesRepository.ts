@@ -12,12 +12,13 @@ export class LembretesRepository {
         const disciplina  = await Disciplina.findByPk(data.discId);
         if (!disciplina) return null
 
-        const materais = await Lembrete.create({
+        const lembrete = await Lembrete.create({
             data_inicio: new Date(data.data_inicio),
             data_fim: new Date(data.data_fim),
             discId: data.discId,
 
         });
+        return lembrete;
     }
 
     async getAllLembretes(discId: number){
@@ -48,7 +49,7 @@ export class LembretesRepository {
         return await Lembrete.findByPk(id);
     }
 
-    async getOneLembrete(discId: number, id: number){
+    async getOneLembrete(discId: number, id: number): Promise<Lembrete | null> {
         const lembrete = await Lembrete.findOne({
             where: {
                 discId,
@@ -56,6 +57,7 @@ export class LembretesRepository {
             }
         })
         if (!lembrete) return null
+        return lembrete;
     }
 
     async deleteLembrete(discId: number, id: number){

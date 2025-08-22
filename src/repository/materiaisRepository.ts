@@ -1,15 +1,10 @@
-import { Materiais } from "../models/materiais";
+import { Materiais, MateriaisCreationAttributes } from "../models/materiais";
 import { Disciplina } from "../models/disciplina";
 import { Blob } from "buffer"
 
 export class MateriaisRepository {
 
-    async createMateriais(data: { 
-       resumos: string;
-       links: string;
-       arquivos: Blob;
-       discId: number;
-    }) {
+    async createMateriais(data: MateriaisCreationAttributes): Promise<Materiais | null> {
 
         const disciplina  = await Disciplina.findByPk(data.discId);
         if (!disciplina) return null

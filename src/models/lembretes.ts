@@ -5,7 +5,7 @@ import { Disciplina } from './disciplina';
 
 // Defina os atributos do modelo
 
-type LembreteCreationAttributes = Optional<LembreteAttributes, 'id'>;
+export interface LembreteCreationAttributes extends Optional<LembreteAttributes, 'id'> {};
 
 interface LembreteAttributes {
   id: number;

@@ -17,7 +17,7 @@ export class DisciplinaRepository {
     const user = await User.findByPk(data.userId);
     if (!user) return null;
 
-    const discplina = await Disciplina.create({
+    const disciplina = await Disciplina.create({
         nome: data.nome,
         sala: data.sala,
         professor: data.professor,
@@ -27,6 +27,8 @@ export class DisciplinaRepository {
         notas: data.notas,
         userId: data.userId,
     });
+
+    return disciplina;
   }
 
     async getAllDisciplinas(userId: number){
@@ -58,14 +60,16 @@ export class DisciplinaRepository {
     return await Disciplina.findByPk(id);}
 
     async getOneDisciplina(userId: number, id: number){
-    const discplina = await Disciplina.findOne({
+    const disciplina = await Disciplina.findOne({
         where: {
             userId,
             id,
         },
 
     })
-    if (!discplina) return null}
+    if (!disciplina) return null
+    return disciplina
+  }
 
     async deleteDisciplina(id: number, userId: number){
     const disciplina = await Disciplina.findOne({
