@@ -4,9 +4,9 @@ import sequelize from '../config/database';
 import {Disciplina} from './disciplina';
 
 // Defina os atributos do modelo
-type MateriaisCreationAttributes = Optional<MateriaisAttributes, 'id'>;
+export interface MateriaisCreationAttributes extends Optional<MateriaisAttributes, 'id'>{};
 
-interface MateriaisAttributes {
+ interface MateriaisAttributes {
    id: number
    resumos: string;
    links: string;

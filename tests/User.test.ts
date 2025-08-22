@@ -1,8 +1,6 @@
 import sequelize from "../src/config/database";
-
 import {UserService}  from "../src/services/UserService"; 
 import { UserRepository } from "../src/repository/UserRepository";
-
 import { User } from "../src/models/User"
 
 describe("Criando um usuário", () => {

@@ -1,10 +1,11 @@
 import { Materiais } from "../models/materiais";
 import { MateriaisRepository } from "../repository/materiaisRepository";
+import { MateriaisCreationAttributes } from "../models/materiais";
 
 export class materiaisService {
     private repo = new MateriaisRepository();
 
-    async createMateriais(data: Materiais) {
+    async createMateriais(data: MateriaisCreationAttributes) {
         return await this.repo.createMateriais(data);
     }
 

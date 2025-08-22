@@ -1,6 +1,6 @@
 import { Materiais } from "../models/materiais";
 import { Disciplina } from "../models/disciplina";
-import { Blob } from "buffer";
+import { Blob } from "buffer"
 
 export class MateriaisRepository {
 
@@ -14,13 +14,15 @@ export class MateriaisRepository {
         const disciplina  = await Disciplina.findByPk(data.discId);
         if (!disciplina) return null
 
-        const materais = await Materiais.create({
+        const materiais = await Materiais.create({
             resumos: data.resumos,
             links: data.links,
             arquivos: data.arquivos,
             discId: data.discId,
 
         });
+
+        return materiais;
     }
 
     async getAllMateriais(discId: number){
@@ -55,6 +57,8 @@ export class MateriaisRepository {
             }
         })
         if (!material) return null
+
+        return material
     }
 
     async deleteMaterial(discId: number, id: number){
