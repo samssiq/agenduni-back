@@ -13,7 +13,7 @@ async createContatos(data: {
         const disciplina  = await Disciplina.findByPk(data.discId);
         if (!disciplina) return null
 
-        const conatato = await Contato.create({
+        const contato = await Contato.create({
             nome: data.nome,
             email: data.email,
             telefone: data.telefone,

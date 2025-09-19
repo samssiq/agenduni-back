@@ -12,7 +12,15 @@ export class disciplinaService {
         return await this.repo.getAllDisciplinas(discId);
     }
 
-    async updateDisciplina(id: number, data: Disciplina) {
+    async updateDisciplina(id: number, data: any) {
+        // Converter notas para número se for string
+        if (data.notas && typeof data.notas === 'string') {
+            data.notas = parseFloat(data.notas);
+        }
+        if (data.faltas && typeof data.faltas === 'string') {
+            data.faltas = parseInt(data.faltas);
+        }
+        
         return await this.repo.updateDisciplina(id, data);
     }
 
@@ -20,7 +28,15 @@ export class disciplinaService {
         return await this.repo.getOneDisciplina(discId, id);
     }
 
+    async getDisciplinaById(id: number) {
+        return await this.repo.getDisciplinaById(id);
+    }
+
     async deleteDisciplina(discId: number, id: number) {
         return await this.repo.deleteDisciplina(discId, id);
+    }
+
+    async deleteDisciplinaById(id: number) {
+        return await this.repo.deleteDisciplinaById(id);
     }
 }

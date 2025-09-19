@@ -9,6 +9,8 @@ import { Contato } from "./models/contatos";
 import { Lembrete } from "./models/lembretes";
 
 import userRoutes from "./routes/UserRoutes";
+import contatoRoute from "./routes/contatoRoute";
+import disciplinaRoutes from "./routes/disciplinaRoutes";
 import { DisciplinaController } from "./controllers/disciplinaController";
 import { ContatoController } from "./controllers/contatoController";
 import { LembretesController } from "./controllers/lembretesController";
@@ -34,9 +36,14 @@ const app = express();
 app.use(express.json());
 setupSwagger(app);
 
-app.use(userRoutes);
+app.use("/users",userRoutes);
 
-sequelize.sync({ force: false }).then(() => {
+app.use("/contatos",contatoRoute);
+
+app.use("/disciplinas", disciplinaRoutes);
+
+
+sequelize.sync({ force: true }).then(() => {
   console.log("Banco de dados conectado!");
   app.listen(3000, () => console.log("Servidor rodando na porta 3000"));
 }).catch((error) => {

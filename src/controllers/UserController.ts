@@ -14,6 +14,7 @@ export class UserController {
       const user = await this.userService.createUser(req.body);
       return res.status(201).json(user);
     } catch (error) {
+      console.log(error);
       return res.status(500).json({ error: "Erro ao criar usuário" });
     }
   }
@@ -59,4 +60,14 @@ export class UserController {
       return res.status(500).json({ error: "Erro ao excluir usuário" });
     }
   }
+
+  async login(req:Request, res:Response):Promise<Response>{
+        try{
+            const{email,senha} = req.body;
+            const authResult = await this.userService.authenticate(email,senha);
+            return res.json(authResult);
+        } catch (error:any){
+            return res.status(400).json({message:error.message});
+        }
+    }
 }

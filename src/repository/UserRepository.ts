@@ -37,9 +37,9 @@ export class UserRepository {
   async updateUser(
     id: number,
     data: Partial<{
-      name: string;
+      nome: string;
       email: string;
-      password: string;
+      senha: string;
     }>
   ) {
     const user = await this.UserModel.findByPk(id);
@@ -50,6 +50,10 @@ export class UserRepository {
 
   async findById(id: number){
     return await this.UserModel.findByPk(id);
+  }
+
+  async findByEmail(email: string){
+    return await this.UserModel.findOne({ where: { email } });
   }
 
   //apenas um return para melhor legibilidade

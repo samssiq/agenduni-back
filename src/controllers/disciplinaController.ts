@@ -20,7 +20,7 @@ export const DisciplinaController = {
         res.status(404).json({ message: "Disciplina não encontrada" });
         return;
       }
-      res.status(204).send();
+      res.status(200).json({ message: "Disciplina atualizada" });
     } catch (err: any) {
       res.status(500).json({ error: err.message });
     }
@@ -37,7 +37,7 @@ export const DisciplinaController = {
 
   async findById(req: Request, res: Response): Promise<void> {
     try {
-      const disciplina = await service.getOneDisciplina(Number(req.params.id), req.body);
+      const disciplina = await service.getDisciplinaById(Number(req.params.id));
       if (!disciplina) {
         res.status(404).json({ message: "Disciplina não encontrada" });
         return;
@@ -50,12 +50,12 @@ export const DisciplinaController = {
 
   async delete(req: Request, res: Response): Promise<void> {
     try {
-      const deleted = await service.deleteDisciplina(Number(req.params.id), req.body);
+      const deleted = await service.deleteDisciplinaById(Number(req.params.id));
       if (!deleted) {
         res.status(404).json({ message: "Disciplina não encontrada" });
         return;
       }
-      res.json(deleted);
+      res.status(204).send();
     } catch (err: any) {
       res.status(500).json({ error: err.message });
     }

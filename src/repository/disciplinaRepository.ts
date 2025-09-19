@@ -41,23 +41,15 @@ export class DisciplinaRepository {
     });
   }
 
-    async updateDisciplina(id: number, data: {
-      nome: string;
-      sala: string;
-      professor: string;
-      horario: string;
-      avaliacoes: string;
-      faltas: number;
-      notas: number;
-      userId: number
-    }) {
+    async updateDisciplina(id: number, data: any) {
     
     const [rowsUpdated] = await Disciplina.update(data, {
         where: {id}
     });
     if (rowsUpdated === 0) return null;
 
-    return await Disciplina.findByPk(id);}
+    return await Disciplina.findByPk(id);
+  }
 
     async getOneDisciplina(userId: number, id: number){
     const disciplina = await Disciplina.findOne({
@@ -71,6 +63,13 @@ export class DisciplinaRepository {
     return disciplina
   }
 
+    async getDisciplinaById(id: number){
+    const disciplina = await Disciplina.findByPk(id, {
+        include: [{ model: User, attributes: ['id', 'nome', 'email'] }]
+    });
+    return disciplina;
+  }
+
     async deleteDisciplina(id: number, userId: number){
     const disciplina = await Disciplina.findOne({
         where: {
@@ -81,6 +80,15 @@ export class DisciplinaRepository {
     if (!disciplina) return null
     
     await disciplina.destroy();
+    return true;
+  }
+
+    async deleteDisciplinaById(id: number){
+    const disciplina = await Disciplina.findByPk(id);
+    if (!disciplina) return null;
+    
+    await disciplina.destroy();
+    return true;
   }
 
     
