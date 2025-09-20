@@ -14,13 +14,21 @@ export class lembretesService {
         return await this.repo.getAllLembretes(discId);
     }
 
-    async updateLembretes(id: number, data: LembreteCreationAttributes): Promise<Lembrete | null> {
+    async updateLembretes(id: number, data: any): Promise<Lembrete | null> {
         return await this.repo.updateLembrete(id, data);
+    }
+
+    async getLembreteById(id: number): Promise<Lembrete | null> {
+        return await this.repo.getLembreteById(id);
     }
 
     async getOneLembrete(discId: number, id: number): Promise<Lembrete | null> {
         const result = await this.repo.getOneLembrete(discId, id);
         return result === undefined ? null : result;
+    }
+
+    async deleteLembreteById(id: number): Promise<boolean> {
+        return await this.repo.deleteLembreteById(id);
     }
 
     async deleteLembrete(discId: number, id: number): Promise<void> {

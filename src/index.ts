@@ -11,6 +11,7 @@ import { Lembrete } from "./models/lembretes";
 import userRoutes from "./routes/UserRoutes";
 import contatoRoute from "./routes/contatoRoute";
 import disciplinaRoutes from "./routes/disciplinaRoutes";
+import lembreteRoutes from "./routes/lembretesRoutes";
 import { DisciplinaController } from "./controllers/disciplinaController";
 import { ContatoController } from "./controllers/contatoController";
 import { LembretesController } from "./controllers/lembretesController";
@@ -42,6 +43,7 @@ app.use("/contatos",contatoRoute);
 
 app.use("/disciplinas", disciplinaRoutes);
 
+app.use("/lembretes", lembreteRoutes);
 
 sequelize.sync({ force: true }).then(() => {
   console.log("Banco de dados conectado!");

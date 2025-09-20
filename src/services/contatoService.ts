@@ -12,6 +12,10 @@ export class contatosService {
         return await this.repo.getAllContatos(discId);
     }
 
+    async getContatosByUser(userId: number) {
+        return await this.repo.getContatosByUser(userId);
+    }
+
     async updateContatos(id: number, data: Contato) {
         return await this.repo.updateContato(id, data);
     }
@@ -20,7 +24,15 @@ export class contatosService {
         return await this.repo.getOneContato(discId, id);
     }
 
+    async getContatoById(id: number) {
+        return await this.repo.getContatoById(id);
+    }
+
     async deleteContato(discId: number, id: number) {
         return await this.repo.deleteContato(discId, id);
+    }
+
+    async deleteContatoById(id: number) {
+        return await this.repo.deleteContatoById(id);
     }
 }

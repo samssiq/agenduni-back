@@ -9,6 +9,7 @@ export interface LembreteCreationAttributes extends Optional<LembreteAttributes,
 
 interface LembreteAttributes {
   id: number;
+  nome: string;
   data_inicio: Date;
   data_fim: Date;
   discId: number;
@@ -17,6 +18,7 @@ interface LembreteAttributes {
 
 export class Lembrete extends Model<LembreteAttributes, LembreteCreationAttributes> implements LembreteAttributes {
     id!: number;
+    nome!: string;
     data_inicio!: Date;
     data_fim!: Date;
     discId!: number;
@@ -30,6 +32,10 @@ Lembrete.init(
       type: DataTypes.INTEGER,
       autoIncrement: true,  
       primaryKey: true,    
+      allowNull: false,
+    },
+    nome: {
+      type: DataTypes.STRING,
       allowNull: false,
     },
     data_inicio: {

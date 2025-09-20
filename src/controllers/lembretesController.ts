@@ -20,7 +20,7 @@ export const LembretesController = {
         res.status(404).json({ message: "Lembrete não encontrado" });
         return;
       }
-      res.status(204).send();
+      res.status(200).json({ message: "Lembrete atualizado com sucesso" });
     } catch (err: any) {
       res.status(500).json({ error: err.message });
     }
@@ -37,7 +37,7 @@ export const LembretesController = {
 
   async findById(req: Request, res: Response): Promise<void> {
     try {
-      const lembrete = await service.getOneLembrete(Number(req.params.id), req.body);
+      const lembrete = await service.getLembreteById(Number(req.params.id));
       if (!lembrete) {
         res.status(404).json({ message: "Lembrete não encontrado" });
         return;
@@ -50,12 +50,12 @@ export const LembretesController = {
 
   async delete(req: Request, res: Response): Promise<void> {
     try {
-      const deleted = await service.deleteLembrete(Number(req.params.id), req.body);
+      const deleted = await service.deleteLembreteById(Number(req.params.id));
       if (!deleted) {
         res.status(404).json({ message: "Lembrete não encontrado" });
         return;
       }
-      res.json(deleted);
+      res.status(204).send();
     } catch (err: any) {
       res.status(500).json({ error: err.message });
     }

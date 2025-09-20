@@ -4,6 +4,7 @@ import { Disciplina } from "../models/disciplina";
 export class LembretesRepository {
 
     async createLembretes(data: { 
+       nome: string;
        data_inicio: Date;
        data_fim: Date;
        discId: number;
@@ -13,6 +14,7 @@ export class LembretesRepository {
         if (!disciplina) return null
 
         const lembrete = await Lembrete.create({
+            nome: data.nome,
             data_inicio: new Date(data.data_inicio),
             data_fim: new Date(data.data_fim),
             discId: data.discId,
@@ -32,15 +34,18 @@ export class LembretesRepository {
     }
 
     async updateLembrete(id: number, data: {
-       data_inicio: Date;
-       data_fim: Date;
-       discId: number;
+       nome?: string;
+       data_inicio?: Date;
+       data_fim?: Date;
+       discId?: number;
     }) {
-        const updateData = {
-            data_inicio: new Date(data.data_inicio),
-            data_fim: new Date(data.data_fim),
-            discId: data.discId
-        };
+        const updateData: any = {};
+        
+        if (data.nome) updateData.nome = data.nome;
+        if (data.data_inicio) updateData.data_inicio = new Date(data.data_inicio);
+        if (data.data_fim) updateData.data_fim = new Date(data.data_fim);
+        if (data.discId) updateData.discId = data.discId;
+
         const [rowsUpdated] = await Lembrete.update(updateData, {
             where: {id}
         });
@@ -60,6 +65,12 @@ export class LembretesRepository {
         return lembrete;
     }
 
+    async getLembreteById(id: number): Promise<Lembrete | null> {
+        return await Lembrete.findByPk(id, {
+            include: [{ model: Disciplina, attributes: ['nome', 'professor'] }]
+        });
+    }
+
     async deleteLembrete(discId: number, id: number){
         const lembrete = await Lembrete.findOne({
             where: {
@@ -70,5 +81,14 @@ export class LembretesRepository {
         if (!lembrete) return null
         
         await lembrete.destroy();
-      }
+        return true;
+    }
+
+    async deleteLembreteById(id: number): Promise<boolean>{
+        const lembrete = await Lembrete.findByPk(id);
+        if (!lembrete) return false;
+        
+        await lembrete.destroy();
+        return true;
+    }
 }

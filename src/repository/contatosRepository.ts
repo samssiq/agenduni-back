@@ -19,6 +19,8 @@ async createContatos(data: {
             telefone: data.telefone,
             discId: data.discId,
         });
+        
+        return contato;
     }
 
     async getAllContatos(discId: number){
@@ -29,6 +31,25 @@ async createContatos(data: {
             where: {discId},
             include: [{model: Disciplina, attributes: ['nome', 'professor']}]
         })
+    }
+
+    async getContatosByUser(userId: number){
+
+        const disciplinas = await Disciplina.findAll({
+            where: { userId },
+            attributes: ['id']
+        });
+
+        if (!disciplinas || disciplinas.length === 0) return [];
+
+        const disciplinaIds = disciplinas.map(disc => disc.id);
+
+        return await Contato.findAll({
+            where: {
+                discId: disciplinaIds
+            },
+            include: [{model: Disciplina, attributes: ['nome', 'professor']}]
+        });
     }
 
     async updateContato(id: number, data: {
@@ -53,6 +74,13 @@ async createContatos(data: {
             }
         })
         if (!contato) return null
+        return contato;
+    }
+
+    async getContatoById(id: number){
+        return await Contato.findByPk(id, {
+            include: [{ model: Disciplina, attributes: ['nome', 'professor'] }]
+        });
     }
 
     async deleteContato(discId: number, id: number){
@@ -65,6 +93,15 @@ async createContatos(data: {
         if (!contato) return null
         
         await contato.destroy();
-      }
+        return true;
+    }
+
+    async deleteContatoById(id: number){
+        const contato = await Contato.findByPk(id);
+        if (!contato) return false;
+        
+        await contato.destroy();
+        return true;
+    }
     
 }

@@ -28,8 +28,28 @@ export const ContatoController = {
 
   async list(req: Request, res: Response): Promise<void> {
     try {
-      const contato = await service.getAllContatos(Number(req.params.id));
-      res.json(contato);
+      const contatos = await service.getAllContatos(Number(req.params.id));
+      
+      if (!contatos) {
+        res.status(404).json({ message: "Disciplina não encontrada" });
+        return;
+      }
+      
+      if (contatos.length === 0) {
+        res.status(200).json({ message: "Ainda não há contatos cadastrados nesta disciplina" });
+        return;
+      }
+      
+      res.json(contatos);
+    } catch (err: any) {
+      res.status(500).json({ error: err.message });
+    }
+  },
+
+  async listByUser(req: Request, res: Response): Promise<void> {
+    try {
+      const contatos = await service.getContatosByUser(Number(req.params.id));
+      res.json(contatos);
     } catch (err: any) {
       res.status(500).json({ error: err.message });
     }
@@ -37,7 +57,7 @@ export const ContatoController = {
 
   async findById(req: Request, res: Response): Promise<void> {
     try {
-      const contato = await service.getOneContato(Number(req.params.id), req.body);
+      const contato = await service.getContatoById(Number(req.params.id));
       if (!contato) {
         res.status(404).json({ message: "Contato não encontrado" });
         return;
@@ -50,12 +70,12 @@ export const ContatoController = {
 
   async delete(req: Request, res: Response): Promise<void> {
     try {
-      const deleted = await service.deleteContato(Number(req.params.id), req.body);
+      const deleted = await service.deleteContatoById(Number(req.params.id));
       if (!deleted) {
         res.status(404).json({ message: "Contato não encontrado" });
         return;
       }
-      res.json(deleted);
+      res.status(204).send();
     } catch (err: any) {
       res.status(500).json({ error: err.message });
     }
