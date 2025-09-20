@@ -14,6 +14,10 @@ export class lembretesService {
         return await this.repo.getAllLembretes(discId);
     }
 
+    async getLembretesByUser(userId: number) {
+        return await this.repo.getLembretesByUser(userId);
+    }
+
     async updateLembretes(id: number, data: any): Promise<Lembrete | null> {
         return await this.repo.updateLembrete(id, data);
     }

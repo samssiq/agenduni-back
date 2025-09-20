@@ -20,10 +20,12 @@
   "homepage": "https://github.com/samssiq/agenduni-back#readme",
   "dependencies": {
     "@sequelize/postgres": "^7.0.0-alpha.46",
+    "@types/multer": "^2.0.0",
     "bcryptjs": "^3.0.2",
     "dotenv": "^17.2.1",
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",
+    "multer": "^2.0.2",
     "mysql2": "^3.14.2",
     "pg": "^8.16.3",
     "save-dev": "^0.0.1-security",

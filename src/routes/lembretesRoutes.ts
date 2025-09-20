@@ -12,6 +12,10 @@ router.get("/lembretes/:id", async (req, res) => {
     await LembretesController.list(req, res);
 });
 
+router.get("/user/:id", async (req, res) => {
+    await LembretesController.listByUser(req, res);
+});
+
 router.get("/:id", async (req, res) => {
     await LembretesController.findById(req, res);
 });

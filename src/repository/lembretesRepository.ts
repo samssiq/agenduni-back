@@ -1,5 +1,6 @@
 import { Lembrete } from "../models/lembretes";
 import { Disciplina } from "../models/disciplina";
+import { User } from "../models/User";
 
 export class LembretesRepository {
 
@@ -30,6 +31,19 @@ export class LembretesRepository {
         return await Lembrete.findAll({
             where: {discId},
             include: [{model: Disciplina, attributes: ['nome', 'professor']}]
+        })
+    }
+
+    async getLembretesByUser(userId: number){
+        const user = await User.findByPk(userId);
+        if (!user) return null
+
+        return await Lembrete.findAll({
+            include: [{
+                model: Disciplina,
+                where: { userId },
+                attributes: ['nome', 'professor']
+            }]
         })
     }
 

@@ -35,6 +35,15 @@ export const LembretesController = {
     }
   },
 
+  async listByUser(req: Request, res: Response): Promise<void> {
+    try {
+      const lembretes = await service.getLembretesByUser(Number(req.params.id));
+      res.json(lembretes);
+    } catch (err: any) {
+      res.status(500).json({ error: err.message });
+    }
+  },
+
   async findById(req: Request, res: Response): Promise<void> {
     try {
       const lembrete = await service.getLembreteById(Number(req.params.id));

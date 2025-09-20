@@ -12,6 +12,7 @@ import userRoutes from "./routes/UserRoutes";
 import contatoRoute from "./routes/contatoRoute";
 import disciplinaRoutes from "./routes/disciplinaRoutes";
 import lembreteRoutes from "./routes/lembretesRoutes";
+import materiaisRoutes from "./routes/materiaisRoutes";
 import { DisciplinaController } from "./controllers/disciplinaController";
 import { ContatoController } from "./controllers/contatoController";
 import { LembretesController } from "./controllers/lembretesController";
@@ -37,13 +38,15 @@ const app = express();
 app.use(express.json());
 setupSwagger(app);
 
-app.use("/users",userRoutes);
+app.use("/users", userRoutes);
 
-app.use("/contatos",contatoRoute);
+app.use("/contatos", contatoRoute);
 
 app.use("/disciplinas", disciplinaRoutes);
 
 app.use("/lembretes", lembreteRoutes);
+
+app.use("/materiais", materiaisRoutes);
 
 sequelize.sync({ force: true }).then(() => {
   console.log("Banco de dados conectado!");
