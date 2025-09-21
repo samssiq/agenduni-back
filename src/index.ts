@@ -1,4 +1,5 @@
 import * as express from "express";
+import * as cors from 'cors';
 import * as dotenv from "dotenv";
 import sequelize from "./config/database";
 import { setupSwagger } from "./config/swagger";
@@ -21,7 +22,6 @@ import {UserController} from "./controllers/UserController";
 
 dotenv.config();
 
-// Associações dos modelos
 Materiais.belongsTo(Disciplina, { foreignKey: 'discId' });
 Disciplina.hasMany(Materiais, { foreignKey: 'discId' });
 
@@ -37,6 +37,8 @@ User.hasMany(Disciplina, { foreignKey: 'userId' });
 const app = express();
 app.use(express.json());
 setupSwagger(app);
+
+app.use(cors());
 
 app.use("/users", userRoutes);
 

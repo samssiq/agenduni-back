@@ -12,6 +12,10 @@ router.get("/materiais/:id", async (req, res) => {
     await MateriaisController.list(req, res);
 });
 
+router.get("/user/:id", async (req, res) => {
+    await MateriaisController.listByUser(req, res);
+});
+
 router.get("/:id", async (req, res) => {
     await MateriaisController.findById(req, res);
 });

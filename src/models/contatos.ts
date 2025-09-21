@@ -3,8 +3,6 @@ import sequelize from '../config/database';
 import { Disciplina } from './disciplina';
 
 
-// Defina os atributos do modelo
-
 type ContatoCreationAttributes = Optional<ContatoAttributes, 'id'>;
 
 interface ContatoAttributes {
@@ -26,7 +24,6 @@ export class Contato extends Model<ContatoAttributes, ContatoCreationAttributes>
 }
 
 
-// Inicialize o modelo com os campos no banco
 Contato.init(
   {
     id: {
@@ -58,5 +55,3 @@ Contato.init(
     timestamps: false,
   }
 );
-
-//Contato.belongsTo(Disciplina, {foreignKey: 'discId'})

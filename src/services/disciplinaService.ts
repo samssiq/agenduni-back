@@ -12,6 +12,10 @@ export class disciplinaService {
         return await this.repo.getAllDisciplinas(discId);
     }
 
+    async getAllDisciplinasWithoutFilter() {
+        return await this.repo.getAllDisciplinasWithoutFilter();
+    }
+
     async updateDisciplina(id: number, data: any) {
         // Converter notas para número se for string
         if (data.notas && typeof data.notas === 'string') {

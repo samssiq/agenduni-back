@@ -8,8 +8,12 @@ router.post("/", async (req, res) => {
     await DisciplinaController.create(req, res);
 });
 
-router.get("/disciplinas/:id", async (req, res) => {
-    await DisciplinaController.list(req, res);
+router.get("/", async (req, res) => {
+    await DisciplinaController.listAll(req, res);
+});
+
+router.get("/user/:userId", async (req, res) => {
+    await DisciplinaController.listByUser(req, res);
 });
 
 router.get("/:id", async (req, res) => {

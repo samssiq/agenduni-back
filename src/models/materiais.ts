@@ -3,11 +3,11 @@ import { Blob } from 'buffer';
 import sequelize from '../config/database';
 import {Disciplina} from './disciplina';
 
-// Defina os atributos do modelo
 export interface MateriaisCreationAttributes extends Optional<MateriaisAttributes, 'id'>{};
 
  interface MateriaisAttributes {
    id: number
+   nome: string;
    resumos: string;
    links: string;
    arquivos: Blob;
@@ -17,20 +17,23 @@ export interface MateriaisCreationAttributes extends Optional<MateriaisAttribute
 
 export class Materiais extends Model<MateriaisAttributes, MateriaisCreationAttributes> implements MateriaisAttributes {
     id!: number;
+    nome!: string;
     resumos!: string;
     links!: string;
     arquivos!: Blob;
     discId!: number;
 }
 
-
-// Inicialize o modelo com os campos no banco
 Materiais.init(
   {
     id: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true,
+    },
+    nome: {
+      type: DataTypes.STRING,
+      allowNull: false,
     },
     resumos: {
       type: DataTypes.STRING,
@@ -55,5 +58,3 @@ Materiais.init(
     timestamps: false,
   }
 );
-
-// Materiais.belongsTo(Disciplina, {foreignKey: 'discId'});

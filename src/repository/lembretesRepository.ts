@@ -6,22 +6,27 @@ export class LembretesRepository {
 
     async createLembretes(data: { 
        nome: string;
+       descricao?: string;
        data_inicio: Date;
        data_fim: Date;
        discId: number;
-    }) {
+    }): Promise<Lembrete | null> {
 
-        const disciplina  = await Disciplina.findByPk(data.discId);
-        if (!disciplina) return null
+        const disciplina = await Disciplina.findByPk(data.discId);
+        if (!disciplina) return null;
 
         const lembrete = await Lembrete.create({
             nome: data.nome,
-            data_inicio: new Date(data.data_inicio),
-            data_fim: new Date(data.data_fim),
+            descricao: data.descricao || '',
+            data_inicio: data.data_inicio,
+            data_fim: data.data_fim,
             discId: data.discId,
-
         });
-        return lembrete;
+        
+        // Retorna o lembrete com informações da disciplina
+        return await Lembrete.findByPk(lembrete.id, {
+            include: [{ model: Disciplina, attributes: ['nome', 'professor'] }]
+        });
     }
 
     async getAllLembretes(discId: number){
@@ -49,6 +54,7 @@ export class LembretesRepository {
 
     async updateLembrete(id: number, data: {
        nome?: string;
+       descricao?: string;
        data_inicio?: Date;
        data_fim?: Date;
        discId?: number;
@@ -56,6 +62,7 @@ export class LembretesRepository {
         const updateData: any = {};
         
         if (data.nome) updateData.nome = data.nome;
+        if (data.descricao !== undefined) updateData.descricao = data.descricao;
         if (data.data_inicio) updateData.data_inicio = new Date(data.data_inicio);
         if (data.data_fim) updateData.data_fim = new Date(data.data_fim);
         if (data.discId) updateData.discId = data.discId;

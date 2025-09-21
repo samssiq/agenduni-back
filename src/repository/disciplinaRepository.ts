@@ -8,6 +8,7 @@ export class DisciplinaRepository {
       sala: string;
       professor: string;
       horario: string;
+      semestre: string;
       avaliacoes: string;
       faltas: number;
       notas: number;
@@ -22,13 +23,17 @@ export class DisciplinaRepository {
         sala: data.sala,
         professor: data.professor,
         horario: data.horario,
+        semestre: data.semestre,
         avaliacoes: data.avaliacoes,
         faltas: data.faltas,
         notas: data.notas,
         userId: data.userId,
     });
 
-    return disciplina;
+    // Retorna a disciplina com informações do usuário
+    return await Disciplina.findByPk(disciplina.id, {
+        include: [{ model: User, attributes: ['id', 'nome', 'email'] }]
+    });
   }
 
     async getAllDisciplinas(userId: number){
@@ -39,7 +44,13 @@ export class DisciplinaRepository {
         where: {userId},
         include: [{ model: User, attributes: ['id', 'nome', 'email'] }]
     });
-  }
+    }
+
+    async getAllDisciplinasWithoutFilter(){
+        return await Disciplina.findAll({
+            include: [{ model: User, attributes: ['id', 'nome', 'email'] }]
+        });
+    }
 
     async updateDisciplina(id: number, data: any) {
     

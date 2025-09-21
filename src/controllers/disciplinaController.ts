@@ -7,8 +7,13 @@ export const DisciplinaController = {
   async create(req: Request, res: Response): Promise<void> {
     try {
       const disciplina = await service.createDisciplina(req.body);
+      if (!disciplina) {
+        res.status(400).json({ error: "Usuário não encontrado ou erro na criação" });
+        return;
+      }
       res.status(201).json(disciplina);
     } catch (err: any) {
+      console.error("Erro ao criar disciplina:", err);
       res.status(500).json({ error: err.message });
     }
   },
@@ -30,6 +35,24 @@ export const DisciplinaController = {
     try {
       const Disciplina = await service.getAllDisciplinas(Number(req.params.id));
       res.json(Disciplina);
+    } catch (err: any) {
+      res.status(500).json({ error: err.message });
+    }
+  },
+
+  async listAll(req: Request, res: Response): Promise<void> {
+    try {
+      const disciplinas = await service.getAllDisciplinasWithoutFilter();
+      res.json(disciplinas);
+    } catch (err: any) {
+      res.status(500).json({ error: err.message });
+    }
+  },
+
+  async listByUser(req: Request, res: Response): Promise<void> {
+    try {
+      const disciplinas = await service.getAllDisciplinas(Number(req.params.userId));
+      res.json(disciplinas);
     } catch (err: any) {
       res.status(500).json({ error: err.message });
     }

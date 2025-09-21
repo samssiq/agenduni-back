@@ -3,8 +3,6 @@ import sequelize from '../config/database';
 import { Disciplina } from './disciplina';
 
 
-// Defina os atributos do modelo
-
 interface UserCreationAttributes extends Optional<UserAttributes, 'id'>{}
 
 interface UserAttributes {
@@ -23,7 +21,6 @@ export class User extends Model<UserAttributes, UserCreationAttributes> implemen
 }
 
 
-// Inicialize o modelo com os campos no banco
 User.init(
   {
     id: {
@@ -51,6 +48,4 @@ User.init(
     timestamps: false,
   }
 );
-
-//User.hasMany(Disciplina);
 

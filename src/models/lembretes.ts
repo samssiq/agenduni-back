@@ -3,13 +3,12 @@ import sequelize from '../config/database';
 import { Disciplina } from './disciplina';
 
 
-// Defina os atributos do modelo
-
 export interface LembreteCreationAttributes extends Optional<LembreteAttributes, 'id'> {};
 
 interface LembreteAttributes {
   id: number;
   nome: string;
+  descricao?: string;
   data_inicio: Date;
   data_fim: Date;
   discId: number;
@@ -19,13 +18,13 @@ interface LembreteAttributes {
 export class Lembrete extends Model<LembreteAttributes, LembreteCreationAttributes> implements LembreteAttributes {
     id!: number;
     nome!: string;
+    descricao?: string;
     data_inicio!: Date;
     data_fim!: Date;
     discId!: number;
 }
 
 
-// Inicialize o modelo com os campos no banco
 Lembrete.init(
   {
     id: {
@@ -37,6 +36,10 @@ Lembrete.init(
     nome: {
       type: DataTypes.STRING,
       allowNull: false,
+    },
+    descricao: {
+      type: DataTypes.TEXT,
+      allowNull: true,
     },
     data_inicio: {
       type: DataTypes.DATE,
@@ -57,5 +60,3 @@ Lembrete.init(
     timestamps: false,
   }
 );
-
-//Lembrete.belongsTo(Disciplina, {foreignKey: 'discId'});

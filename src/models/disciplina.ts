@@ -5,8 +5,6 @@ import { Materiais } from './materiais';
 import { Contato } from './contatos'
 import { Lembrete } from './lembretes';
 
-// Defina os atributos do modelo
-
 type DisciplinaCreationAttributes = Optional<DisciplinaAttributes, 'id'>;
 
 interface DisciplinaAttributes {
@@ -15,6 +13,7 @@ interface DisciplinaAttributes {
   sala: string;
   professor: string;
   horario: string;
+  semestre: string;
   avaliacoes: string;
   faltas: number;
   notas: number;
@@ -28,6 +27,7 @@ export class Disciplina extends Model<DisciplinaAttributes, DisciplinaCreationAt
   sala!: string;
   professor!: string;
   horario!: string;
+  semestre!: string;
   avaliacoes!: string;
   faltas!: number;
   notas!: number;
@@ -35,7 +35,6 @@ export class Disciplina extends Model<DisciplinaAttributes, DisciplinaCreationAt
 }
 
 
-// Inicialize o modelo com os campos no banco
 Disciplina.init(
   {
     id: {
@@ -50,7 +49,6 @@ Disciplina.init(
     sala: {
       type: DataTypes.STRING,
       allowNull: false,
-      //unique: true, #quando usar o unique?
     },
     professor: {
       type: DataTypes.STRING,
@@ -60,6 +58,10 @@ Disciplina.init(
         type: DataTypes.STRING,
         allowNull: false,
       },
+    semestre: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
     avaliacoes: {
         type: DataTypes.STRING,
         allowNull: true,
@@ -84,9 +86,3 @@ Disciplina.init(
     timestamps: false,
   }
 );
-
-
-//Disciplina.hasMany(Materiais, { foreignKey: 'discId' });
-//Disciplina.hasMany(Contato, {foreignKey: 'discId'});
-//Disciplina.hasMany(Lembrete, {foreignKey: 'discId'});
-//Disciplina.belongsTo(User, {foreignKey: 'userId'});

@@ -3,8 +3,6 @@ import { UserRepository } from "../repository/UserRepository";
 import { User } from "../models/User";
 import * as jwt from "jsonwebtoken";
 
-//foi adicionada criptografia de senha no create e update
-
 const userRepository = new UserRepository();
 const saltRounds = 10;
 

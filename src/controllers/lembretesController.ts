@@ -6,16 +6,55 @@ const service = new lembretesService();
 export const LembretesController = {
   async create(req: Request, res: Response): Promise<void> {
     try {
-      const lembrete = await service.createLembretes(req.body);
+      // Validações básicas
+      if (!req.body.nome) {
+        res.status(400).json({ error: "Nome é obrigatório" });
+        return;
+      }
+      
+      if (!req.body.discId || req.body.discId === 0) {
+        res.status(400).json({ error: "Disciplina deve ser selecionada" });
+        return;
+      }
+      
+      if (!req.body.data_inicio) {
+        res.status(400).json({ error: "Data é obrigatória" });
+        return;
+      }
+
+      // O frontend agora envia os dados já no formato correto do backend
+      const lembreteData = {
+        nome: req.body.nome,                      // frontend agora envia 'nome'
+        descricao: req.body.descricao,            // frontend envia 'descricao'
+        data_inicio: new Date(req.body.data_inicio), // frontend agora envia 'data_inicio'
+        data_fim: new Date(req.body.data_fim || req.body.data_inicio), // frontend envia 'data_fim' ou usa data_inicio
+        discId: req.body.discId                   // frontend agora envia 'discId'
+      };
+      
+      const lembrete = await service.createLembretes(lembreteData);
+      if (!lembrete) {
+        res.status(400).json({ error: "Disciplina não encontrada" });
+        return;
+      }
       res.status(201).json(lembrete);
     } catch (err: any) {
+      console.error("Erro ao criar lembrete:", err);
       res.status(500).json({ error: err.message });
     }
   },
 
   async update(req: Request, res: Response): Promise<void> {
     try {
-      const lembrete = await service.updateLembretes(Number(req.params.id), req.body);
+      // O frontend agora envia os dados no formato correto do backend
+      const updateData = {
+        nome: req.body.nome,
+        descricao: req.body.descricao,
+        data_inicio: req.body.data_inicio ? new Date(req.body.data_inicio) : undefined,
+        data_fim: req.body.data_fim ? new Date(req.body.data_fim) : undefined,
+        discId: req.body.discId
+      };
+      
+      const lembrete = await service.updateLembretes(Number(req.params.id), updateData);
       if (!lembrete) {
         res.status(404).json({ message: "Lembrete não encontrado" });
         return;

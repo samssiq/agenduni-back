@@ -1,5 +1,6 @@
 import { Materiais, MateriaisCreationAttributes } from "../models/materiais";
 import { Disciplina } from "../models/disciplina";
+import { User } from "../models/User";
 import { Blob } from "buffer"
 
 export class MateriaisRepository {
@@ -10,6 +11,7 @@ export class MateriaisRepository {
         if (!disciplina) return null
 
         const materiais = await Materiais.create({
+            nome: data.nome,
             resumos: data.resumos,
             links: data.links,
             arquivos: data.arquivos,
@@ -30,13 +32,36 @@ export class MateriaisRepository {
         })
     }
 
+    async getMateriaisByUser(userId: number){
+        return await Materiais.findAll({
+            include: [{
+                model: Disciplina,
+                attributes: ['nome', 'professor'],
+                where: { userId },
+                include: [{
+                    model: User,
+                    attributes: ['nome', 'email']
+                }]
+            }]
+        });
+    }
+
     async updateMateriais(id: number, data: {
-       resumos: string;
-       links: string;
-       arquivos: Blob;
-       discId: number;
+       nome?: string;
+       resumos?: string;
+       links?: string;
+       arquivos?: Blob;
+       discId?: number;
     }) {
-        const [rowsUpdated] = await Materiais.update(data, {
+        const updateData: any = {};
+        
+        if (data.nome !== undefined) updateData.nome = data.nome;
+        if (data.resumos !== undefined) updateData.resumos = data.resumos;
+        if (data.links !== undefined) updateData.links = data.links;
+        if (data.arquivos !== undefined) updateData.arquivos = data.arquivos;
+        if (data.discId !== undefined) updateData.discId = data.discId;
+        
+        const [rowsUpdated] = await Materiais.update(updateData, {
             where: {id}
         });
         if (rowsUpdated === 0) return null;
@@ -56,6 +81,13 @@ export class MateriaisRepository {
         return material
     }
 
+    async getMateriaisById(id: number){
+        const material = await Materiais.findByPk(id);
+        if (!material) return null
+
+        return material;
+    }
+
     async deleteMaterial(discId: number, id: number){
         const material = await Materiais.findOne({
             where: {
@@ -67,4 +99,12 @@ export class MateriaisRepository {
         
         await material.destroy();
       }
+
+    async deleteMateriaisById(id: number){
+        const material = await Materiais.findByPk(id);
+        if (!material) return null
+        
+        await material.destroy();
+        return material;
+    }
 }

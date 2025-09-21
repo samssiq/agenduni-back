@@ -35,9 +35,18 @@ export const MateriaisController = {
     }
   },
 
+  async listByUser(req: Request, res: Response): Promise<void> {
+    try {
+      const materials = await service.getMateriaisByUser(Number(req.params.id));
+      res.json(materials);
+    } catch (err: any) {
+      res.status(500).json({ error: err.message });
+    }
+  },
+
   async findById(req: Request, res: Response): Promise<void> {
     try {
-      const material = await service.getOneMaterial(Number(req.params.id), req.body);
+      const material = await service.getMateriaisById(Number(req.params.id));
       if (!material) {
         res.status(404).json({ message: "Material não encontrado" });
         return;
@@ -50,12 +59,12 @@ export const MateriaisController = {
 
   async delete(req: Request, res: Response): Promise<void> {
     try {
-      const deleted = await service.deleteMaterial(Number(req.params.id), req.body);
+      const deleted = await service.deleteMateriaisById(Number(req.params.id));
       if (!deleted) {
         res.status(404).json({ message: "Material não encontrado" });
         return;
       }
-      res.json(deleted);
+      res.status(204).send();
     } catch (err: any) {
       res.status(500).json({ error: err.message });
     }
